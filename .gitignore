@@ -1,0 +1,25 @@
+# pixi environments
+.pixi/
+
+# python 
+__pycache__
+/*.py[cod]
+.venv/
+venv/
+env/
+
+# mac
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# slurm logs
+*.out
+*.err
+
+# project specific
+checkpoints/
+results/
+gifs/
