@@ -22,8 +22,8 @@ class Critic(nn.Module):
         # - Independent DDPG: obs_dim + act_dim
         # - MADDPG: sum(all_obs_dims) + sum(all_act_dims)
         self.fc1 = nn.Linear(input_dim, 128)
-        self.fc2 = nn.Linear(128, 128)
-        self.fc3 = nn.Linear(128, 1)
+        self.fc2 = nn.Linear(128,       128)
+        self.fc3 = nn.Linear(128,         1)
 
     def forward(self, state_action):
         """state_action is a concatenated vec of obs & actions"""
