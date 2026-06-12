@@ -1,3 +1,8 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Python](https://img.shields.io/badge/python-3.12-blue.svg)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=flat&logo=PyTorch&logoColor=white)
+![PettingZoo](https://img.shields.io/badge/PettingZoo-MPE-green.svg)
+
 # Predator-Prey MADDPG Project
 
 
@@ -139,3 +144,7 @@ predator_prey_arena/
 
 <br>
 
+---
+
+## [License](#license)
+This project is licensed under the **MIT license** - see the file [LICENSE](LICENSE) for details.
