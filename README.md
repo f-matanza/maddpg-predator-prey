@@ -33,9 +33,9 @@ $$
 $$
 
 Key ingredients:
-- **Replay buffer** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— store $(o, a, r, o', \text{done})$ transitions, sample mini-batches
-- **Target networks** &nbsp;&nbsp;— slowly-updated copies of actor & critic for stable TD targets
-- **Soft updates** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;— the networks get updated stepwise: $$\theta_{\text{target}} \leftarrow \tau \cdot \theta + (1-\tau) \cdot \theta_{\text{target}} \quad \text{with } \tau = 0.01$$
+- **Replay buffer**        — store $(o, a, r, o', \text{done})$ transitions, sample mini-batches
+- **Target networks**   — slowly-updated copies of actor & critic for stable TD targets
+- **Soft updates**         — the networks get updated stepwise: $$\theta_{\text{target}} \leftarrow \tau \cdot \theta + (1-\tau) \cdot \theta_{\text{target}} \quad \text{with } \tau = 0.01$$
 - **Exploration noise** — add Gaussian or Ornstein-Uhlenbeck noise to actions during training
 
 ### 2.2 Independent DDPG (baseline)
@@ -56,11 +56,9 @@ Each agent $i$ has its own actor $\mu_i(o_i)$ and a **centralized** critic $Q_i(
 flowchart TD
     subgraph Training["TRAINING (centralized)"]
         direction TB
-        C["Critic_i(o₁,&nbsp;o₂,&nbsp;...,&nbsp;oₙ,&nbsp;a₁,&nbsp;a₂,&nbsp;...,&nbsp;aₙ)"]
+        C["Critic_i(o₁,o₂,…,oₙ,a₁,a₂,…,aₙ)"]
         A1["Actor_i( oᵢ ) &rarr; aᵢ"]
         C -- gradient --> A1
-
-        style C min-width:300px;
     end
 
     subgraph Execution["EXECUTION (decentralized)"]
