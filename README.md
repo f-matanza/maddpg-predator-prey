@@ -146,3 +146,12 @@ predator_prey_arena/
 
 ## [License](#license)
 This project is licensed under the **MIT license** - see the file [LICENSE](LICENSE) for details.
+
+---
+
+## Acknowledgements
+This project demonstrates concepts introduced in the original MADDPG paper:
+> **[Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments](https://arxiv.org/abs/1706.02275)**
+> by Ryan Lowe, Yi Wu, Aviv Tamar, Jean Harb, OpenAI Pieter Abbeel, Igor Mordatch.
+
+The original implementation can be found at the [OpenAI MADDPG Repository](https://github.com/openai/maddpg).
