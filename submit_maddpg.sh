@@ -31,13 +31,13 @@ echo "Python Version:"
 echo "==============================="
 echo -e "Training started: $(date)\n"
 
-srun --cpu-bind=cores "$PYTHON" -u -B train.py
+srun --cpu-bind=cores "$PYTHON" -u -m src.train --algorithm maddpg
 
 echo -e "\nTraining finished: $(date)"
 echo "==============================="
 echo -e "Evaluation started: $(date)\n"
 
-srun --cpu-bind=cores xvfb-run -a "$PYTHON" -u -B evaluate.py
+srun --cpu-bind=cores xvfb-run -a "$PYTHON" -u -m src.evaluate --algorithm maddpg
 
 echo -e "\nEvaluation finished: $(date)"
 echo

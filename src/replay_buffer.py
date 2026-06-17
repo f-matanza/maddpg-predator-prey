@@ -1,32 +1,71 @@
 import random
 from collections import deque
+
 import numpy as np
 
+
 class ReplayBuffer:
-    def __init__(self, capacity):
-        self.buffer = deque(maxlen=capacity)
-    
-    def push(self, obs, act, rew, next_obs, done):
-        """
-        expects tuples/lists where each element belongs to one agent
-        e.g., obs = (obs_agent_1, obs_agent_2, ...)
-        """
-        self.buffer.append((obs, act, rew, next_obs, done))
-    
+    def __init__(self, capacity, agent_ids=None):
+        self.capacity  = capacity
+        self.buffer    = deque(maxlen=capacity)
+        self.agent_ids = list(agent_ids) if agent_ids is not None else None
+
+    def _ordered(self, data):
+        if self.agent_ids is None:
+            raise ValueError("agent_ids must be set before pushing transitions")
+        return [np.asarray(data[agent_id], dtype=np.float32) for agent_id in self.agent_ids]
+
+    def push(self, obs_dict, action_dict, reward_dict, next_obs_dict, done_dict):
+        if self.agent_ids is None:
+            self.agent_ids = sorted(obs_dict.keys())
+
+        transition = (
+            self._ordered(obs_dict),
+            self._ordered(action_dict),
+            [float(reward_dict[agent_id]) for agent_id in self.agent_ids],
+            self._ordered(next_obs_dict),
+            [bool(done_dict[agent_id]) for agent_id in self.agent_ids],
+        )
+        self.buffer.append(transition)
+
     def sample(self, batch_size):
-        batch = random.sample(self.buffer, batch_size)
-        obs, act, rew, next_obs, don = zip(*batch)
-        
-        # transpose so that we get a list of batches per agent
-        num_agents = len(obs[0])
-        
-        obs_batch = [np.array([o[i] for o in obs]) for i in range(num_agents)]
-        act_batch = [np.array([a[i] for a in act]) for i in range(num_agents)]
-        rew_batch = [np.array([r[i] for r in rew]) for i in range(num_agents)]
-        next_obs_batch = [np.array([no[i] for no in next_obs]) for i in range(num_agents)]
-        don_batch = [np.array([d[i] for d in don]) for i in range(num_agents)]
-        
-        return obs_batch, act_batch, rew_batch, next_obs_batch, don_batch
-    
+        if len(self.buffer) < batch_size:
+            raise ValueError(
+                f"Cannot sample {batch_size} transitions from buffer of size {len(self.buffer)}"
+            )
+
+        batch      = random.sample(self.buffer, batch_size)
+        num_agents = len(self.agent_ids)
+
+        obs = [
+            np.stack([transition[0][agent_idx] for transition in batch])
+            for agent_idx in range(num_agents)
+        ]
+        actions = [
+            np.stack([transition[1][agent_idx] for transition in batch])
+            for agent_idx in range(num_agents)
+        ]
+        rewards = np.array(
+            [[transition[2][agent_idx] for transition in batch] for agent_idx in range(num_agents)],
+            dtype=np.float32,
+        ).T
+        next_obs = [
+            np.stack([transition[3][agent_idx] for transition in batch])
+            for agent_idx in range(num_agents)
+        ]
+        dones = np.array(
+            [[transition[4][agent_idx] for transition in batch] for agent_idx in range(num_agents)],
+            dtype=np.float32,
+        ).T
+
+        return {
+            "agent_ids": self.agent_ids,
+            "obs":       obs,
+            "actions":   actions,
+            "rewards":   rewards,
+            "next_obs":  next_obs,
+            "dones":     dones,
+        }
+
     def __len__(self):
         return len(self.buffer)

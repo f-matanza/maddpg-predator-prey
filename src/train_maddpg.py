@@ -1,4 +1,3 @@
-import argparse
 import os
 
 import numpy as np
@@ -7,29 +6,12 @@ import torch
 from mpe2 import simple_tag_v3
 
 from src import config
-from src.independent_ddpg import IndependentDDPG
 from src.maddpg import MADDPG
 from src.replay_buffer import ReplayBuffer
 
 
-def resolve_device():
-    if torch.cuda.is_available():
-        return "cuda"
-    if torch.backends.mps.is_available():
-        return "mps"
-    return "cpu"
-
-
-def build_controller(env, algorithm, device):
-    if algorithm == "maddpg":
-        return MADDPG(env, device=device)
-    if algorithm == "iddpg":
-        return IndependentDDPG(env, device=device)
-    raise ValueError(f"Unknown algorithm: {algorithm}")
-
-
-def train(algorithm):
-    device = resolve_device()
+def train():
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
     env = simple_tag_v3.parallel_env(
@@ -43,18 +25,14 @@ def train(algorithm):
     env.reset()
     agent_names = env.possible_agents
 
-    controller = build_controller(env, algorithm, device=device)
+    controller = MADDPG(env, device=device)
     buffer     = ReplayBuffer(config.BUFFER_SIZE, agent_ids=agent_names)
 
-    ckpt_dir  = f"checkpoints/{algorithm}"
-    csv_path  = f"results/{algorithm}_rewards.csv"
-    label     = "MADDPG" if algorithm == "maddpg" else "Independent DDPG"
-
     rewards_history = []
-    os.makedirs("results", exist_ok=True)
-    os.makedirs(ckpt_dir,  exist_ok=True)
+    os.makedirs("results",            exist_ok=True)
+    os.makedirs("checkpoints/maddpg", exist_ok=True)
 
-    print(f"Starting Training ({label})...")
+    print("Starting Training (MADDPG)...")
     for ep in range(1, config.NUM_EPS + 1):
         obs, _ = env.reset()
 
@@ -107,25 +85,13 @@ def train(algorithm):
             for a_name, agent in controller.agents.items():
                 torch.save(
                     agent.actor.state_dict(),
-                    f"{ckpt_dir}/{a_name}_actor_ep{ep}.pt",
+                    f"checkpoints/maddpg/{a_name}_actor_ep{ep}.pt",
                 )
 
     df = pd.DataFrame(rewards_history)
-    df.to_csv(csv_path, index=False)
-    print(f"Training complete! Logs saved to {csv_path}")
-
-
-def main():
-    parser = argparse.ArgumentParser(description="Train MADDPG or Independent DDPG")
-    parser.add_argument(
-        "--algorithm",
-        choices = ["maddpg", "iddpg"],
-        default = "iddpg",
-        help    = "Which algorithm to train",
-    )
-    args = parser.parse_args()
-    train(args.algorithm)
+    df.to_csv("results/maddpg_rewards.csv", index=False)
+    print("Training complete! Logs saved to results/maddpg_rewards.csv")
 
 
 if __name__ == "__main__":
-    main()
+    train()
