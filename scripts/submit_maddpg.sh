@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --job-name=maddpg_01
-#SBATCH --partition=gpu
 #SBATCH --gpus=1
 #SBATCH --output=slurm-out-%x.log
 #SBATCH --nodes=1
@@ -31,13 +30,13 @@ echo "Python Version:"
 echo "==============================="
 echo -e "Training started: $(date)\n"
 
-srun --cpu-bind=cores "$PYTHON" -u -B -m src.train --algorithm iddpg
+srun --cpu-bind=cores "$PYTHON" -u -B -m src.train --algorithm maddpg --run-name slow_run
 
 echo -e "\nTraining finished: $(date)"
 echo "==============================="
 echo -e "Evaluation started: $(date)\n"
 
-srun --cpu-bind=cores xvfb-run -a "$PYTHON" -u -B -m src.evaluate --algorithm iddpg
+srun --cpu-bind=cores xvfb-run -a "$PYTHON" -u -B -m src.evaluate --algorithm maddpg --run-name slow_run --num-episodes 5 --fps 10
 
 echo -e "\nEvaluation finished: $(date)"
 echo

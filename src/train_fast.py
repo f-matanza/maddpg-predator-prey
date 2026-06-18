@@ -46,15 +46,15 @@ def train(algorithm, run_name="run_0"):
     controller = build_controller(env, algorithm, device=device)
     buffer     = ReplayBuffer(config.BUFFER_SIZE, agent_ids=agent_names)
 
-    ckpt_dir  = f"checkpoints/{algorithm}/{run_name}"
-    csv_path  = f"results/{algorithm}_{run_name}_rewards.csv"
-    label     = "MADDPG" if algorithm == "maddpg" else "Independent DDPG"
+    ckpt_dir = f"checkpoints/{algorithm}/{run_name}"
+    csv_path = f"results/{algorithm}_{run_name}_rewards.csv"
+    label    = "MADDPG" if algorithm == "maddpg" else "Independent DDPG"
 
     rewards_history = []
     os.makedirs("results", exist_ok=True)
     os.makedirs(ckpt_dir,  exist_ok=True)
 
-    print(f"Starting Training ({label})...")
+    print(f"Starting Training ({label}) - FAST MODE...")
     for ep in range(1, config.NUM_EPS + 1):
         obs, _ = env.reset()
 
@@ -82,9 +82,12 @@ def train(algorithm, run_name="run_0"):
 
             obs = next_obs
 
-            if len(buffer) >= config.BATCH_SIZE:
+        # TEST start: 5 updates only at the end of the episode (wrt training time)
+        if len(buffer) >= config.BATCH_SIZE:
+            for _ in range(5):
                 batch = buffer.sample(config.BATCH_SIZE)
                 controller.update(batch)
+        # TEST end
 
         adv_rewards = [ep_reward[a] for a in agent_names if "adversary" in a]
         adv_mean    = np.mean(adv_rewards) if adv_rewards else 0.0
