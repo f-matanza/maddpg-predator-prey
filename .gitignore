@@ -23,3 +23,8 @@ Thumbs.db
 checkpoints/
 results/
 gifs/
+
+# Quarto
+.quarto/
+*_files/
+*.html
