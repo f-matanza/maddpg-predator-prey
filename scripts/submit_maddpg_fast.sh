@@ -1,6 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=maddpg_01
-#SBATCH --partition=gpu
+#SBATCH --job-name=maddpg_fast
 #SBATCH --gpus=1
 #SBATCH --output=slurm-out-%x.log
 #SBATCH --nodes=1
@@ -14,6 +13,7 @@ set -euo pipefail
 
 PROJECT_DIR="$PWD"
 PYTHON="$PROJECT_DIR/.pixi/envs/default/bin/python"
+export PYTHONPATH="$PROJECT_DIR"
 
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
@@ -31,13 +31,13 @@ echo "Python Version:"
 echo "==============================="
 echo -e "Training started: $(date)\n"
 
-srun --cpu-bind=cores "$PYTHON" -u -B -m src.train --algorithm maddpg
+srun --cpu-bind=cores "$PYTHON" -u -B -m src.train_fast --algorithm maddpg --run-name fast_run
 
 echo -e "\nTraining finished: $(date)"
 echo "==============================="
 echo -e "Evaluation started: $(date)\n"
 
-srun --cpu-bind=cores xvfb-run -a "$PYTHON" -u -B -m src.evaluate --algorithm maddpg
+srun --cpu-bind=cores "$PYTHON" -u -B -m src.evaluate --algorithm maddpg --run-name fast_run --num-episodes 5 --fps 10
 
 echo -e "\nEvaluation finished: $(date)"
 echo

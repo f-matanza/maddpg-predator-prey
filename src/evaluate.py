@@ -1,5 +1,8 @@
 import argparse
+import os
 from pathlib import Path
+
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 
 import imageio
 import numpy as np
@@ -128,11 +131,17 @@ def main():
         default     = 15,
         help        = "GIF frames per second",
     )
+    parser.add_argument(
+        "--run-name",
+        type    = str,
+        default = "run_0",
+        help    = "Name of the experiment run",
+    )
     args = parser.parse_args()
 
     algorithm  = args.algorithm
-    ckpt_dir   = args.checkpoint_dir or Path(f"checkpoints/{algorithm}")
-    output     = args.output or Path(f"gifs/{algorithm}_trained.gif")
+    ckpt_dir   = args.checkpoint_dir or Path(f"checkpoints/{algorithm}/{args.run_name}")
+    output     = args.output or Path(f"gifs/{algorithm}_{args.run_name}_trained.gif")
     device     = resolve_device()
 
     env        = make_env(render_mode=None)
