@@ -1,0 +1,405 @@
+---
+title: "Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments"
+subtitle: "MADDPG vs. Independent DDPG on Predator-Prey"
+author: "Fabio Matanza & Daniel Wassie"
+institute: "Advanced Reinforcement Learning and Agentic AI Systems"
+date: today
+format:
+  revealjs:
+    theme: [default, maddpg-metropolis.scss]
+    aspectratio: 169
+    width: 1600
+    height: 900
+    margin: 0.07
+    slide-number: true
+    controls: true
+    progress: true
+    hash: true
+    history: true
+    center: false
+    transition: slide
+    incremental: false
+    html-math-method: mathml
+execute:
+  echo: false
+---
+
+<!-- 
+Author: f-matanza (https://github.com/f-matanza) 
+Co-Author: danneba (https://github.com/danneba) 
+-->
+
+# 1. Motivation {.section-slide}
+
+## Motivation
+
+::: {.focus-grid}
+::: {.focus-card .accent-teal}
+<span class="label">Context</span>
+**Real-world AI is multi-agent.** Robotics, games, traffic control, and agentic AI systems all require agents that adapt around other agents.
+:::
+
+::: {.focus-card .accent-orange}
+<span class="label">Core problem</span>
+Single-agent RL assumes a stable environment. In MARL, other learners keep changing the transition and reward dynamics.
+:::
+
+::: {.focus-card .accent-red}
+<span class="label">Failure mode</span>
+Independent learners see other agents as an unpredictable part of the environment, which raises variance and breaks key Q-learning assumptions.
+:::
+
+::: {.focus-card .accent-green}
+<span class="label">Solution idea</span>
+MADDPG uses **Centralized Training, Decentralized Execution** to stabilize learning while preserving deployable local policies.
+:::
+:::
+
+## Multi-Agent Non-Stationarity
+
+::: {.lead}
+The central issue is that every agent is learning inside an environment made partly of other learning agents.
+:::
+
+::: {.equation-band .equation-hero}
+**Multi-agent non-stationarity:**&nbsp;&nbsp;while agent $i$ learns $\pi_i(a_i \mid o_i)$, every other policy $\pi_j$ also changes, so the effective environment seen by $i$ is not fixed.
+:::
+
+::: {.focus-grid .compact-grid}
+::: {.focus-card .accent-red}
+<span class="label">Training signal</span>
+Replay data becomes stale because the behavior policies that generated it are no longer fixed.
+:::
+
+::: {.focus-card .accent-teal}
+<span class="label">Credit assignment</span>
+The reward for one agent depends on joint behavior, not only on its own action.
+:::
+:::
+
+# 2. Background & Problem Statement {.section-slide}
+
+## RL Background: Single Agent
+
+::: {.stack-grid}
+::: {.panel style="padding:0.72em 0.82em;"}
+<div class="panel-title">Reinforcement Learning Loop</div>
+
+- **MDP:** state $s$, action $a$, reward $r$, transition dynamics.
+- **Policy:** $\pi(a \mid s)$ or deterministic actor $\mu(s)$.
+- **Objective:** maximize expected discounted return.
+:::
+
+::: {.panel style="padding:0.72em 0.82em;"}
+<div class="panel-title">Actor-Critic and DDPG</div>
+
+- **Actor:** selects continuous actions.
+- **Critic:** estimates expected return.
+- **DDPG:** off-policy learning with replay buffer, target networks, and soft updates $\tau$.
+:::
+:::
+
+::: {.equation-band .center-equation}
+Target-network update:&nbsp;&nbsp;$\theta' \leftarrow \tau \cdot \theta + (1-\tau)\cdot \theta'$
+:::
+
+## Multi-Agent Setting
+
+::: {.arena-stack}
+::: {.tight}
+- **Formalism:** partially observable Markov game with $N$ agents.
+- Each agent $i$ receives observation $o_i$, chooses action $a_i$, and receives reward $r_i$.
+- **Environment:** PettingZoo MPE `simple_tag_v3` / `mpe2` predator-prey.
+- **Scenario:** 3 slower predators vs. 1 faster prey with 2 obstacles.
+- Coordination matters because a single predator is easy to evade.
+:::
+
+<div class="arena" aria-label="Predator-prey schematic">
+  <div class="obstacle obstacle-a"></div>
+  <div class="obstacle obstacle-b"></div>
+  <div class="agent predator p1">P</div>
+  <div class="agent predator p2">P</div>
+  <div class="agent predator p3">P</div>
+  <div class="agent prey prey-1">E</div>
+</div>
+:::
+
+## The Problem with Independent Learners
+
+::: {.focus-grid}
+::: {.focus-card .accent-red}
+<span class="label">Non-stationarity</span>
+Each policy changes during training, so replay data becomes stale faster and the learning target keeps moving.
+:::
+
+::: {.focus-card .accent-orange}
+<span class="label">High variance</span>
+Rewards depend on the joint action, but each learner only observes a local slice of the system.
+:::
+
+::: {.focus-card .accent-teal}
+<span class="label">Baseline critic</span>
+Independent DDPG trains each agent with a local critic: $Q_i(o_i, a_i)$.
+:::
+
+::: {.focus-card .accent-green}
+<span class="label">Consequence</span>
+Other agents appear as uncontrolled environment dynamics, making coordination difficult to learn.
+:::
+:::
+
+# 3. Core Method / Architecture {.section-slide}
+
+## Core Idea: CTDE
+
+::: {.lead}
+MADDPG separates **what information is available during training** from **what information is required at execution time**.
+:::
+
+::: {.stack-grid}
+::: {.panel style="padding:0.75em 0.85em;"}
+<div class="panel-title">Centralized Training</div>
+
+- The critic observes all agents' observations and actions.
+- It can assign credit using global context.
+- This stabilizes gradients in cooperative, competitive, and mixed games.
+:::
+
+::: {.panel style="padding:0.75em 0.85em;"}
+<div class="panel-title">Decentralized Execution</div>
+
+- Each actor uses only its own local observation.
+- No global state or explicit communication channel is required at deployment.
+- The learned policy can be run independently per agent.
+:::
+:::
+
+## Architecture Comparison
+
+::: {.method-grid}
+::: {.arch-card}
+<div class="arch-title">Independent DDPG Baseline</div>
+<div class="model-line">
+  <div class="model-label">Actor</div>
+  <div class="model-box">$\mu_i(o_i) \rightarrow a_i$</div>
+</div>
+<div class="model-line">
+  <div class="model-label">Critic</div>
+  <div class="model-box">$Q_i(o_i, a_i)$</div>
+</div>
+<p class="fairness-note">Each agent learns with local information only.</p>
+:::
+
+::: {.arch-card}
+<div class="arch-title">MADDPG</div>
+<div class="model-line">
+  <div class="model-label">Actor</div>
+  <div class="model-box">$\mu_i(o_i) \rightarrow a_i$</div>
+</div>
+<div class="model-line">
+  <div class="model-label">Critic</div>
+  <div class="model-box emphasis">$Q_i(o_1,\dots,o_N,a_1,\dots,a_N)$</div>
+</div>
+<p class="fairness-note">Only the critic input changes, keeping the comparison focused.</p>
+:::
+:::
+
+## MADDPG Learning Flow
+
+::: {.flow-stack}
+::: {.flow-step}
+<div class="flow-heading"><span class="num">1</span><strong>Joint replay</strong></div>
+<span>Store $(o_{all}, a_{all}, r_{all}, o'_{all})$ for all agents.</span>
+:::
+
+::: {.flow-step}
+<div class="flow-heading"><span class="num">2</span><strong>Critic update</strong></div>
+<span>Fit centralized targets with all next observations and target actors.</span>
+:::
+
+::: {.flow-step}
+<div class="flow-heading"><span class="num">3</span><strong>Actor update</strong></div>
+<span>Improve $\mu_i$ using the gradient of centralized $Q_i$ with respect to $a_i$.</span>
+:::
+
+::: {.flow-step}
+<div class="flow-heading"><span class="num">4</span><strong>Soft targets</strong></div>
+<span>Update target networks with $\theta' \leftarrow \tau\theta + (1-\tau)\theta'$.</span>
+:::
+:::
+
+::: {.equation-band}
+Critic target for agent $i$:&nbsp;&nbsp;$y_i = r_i + \gamma Q'_i(\mathbf{x}', \mu'_1(o'_1), \dots, \mu'_N(o'_N))$
+:::
+
+# 4. Key Results & Evaluation {.section-slide}
+
+## Paper Results: Lowe et al. (2020)
+
+::: {.results-grid}
+::: {.result-card .accent-teal}
+<span class="label">MADDPG predators vs. DDPG prey</span>
+<div class="metric"><span class="value">16.1</span><span class="unit">touches / episode</span></div>
+:::
+
+::: {.result-card .accent-orange}
+<span class="label">DDPG predators vs. MADDPG prey</span>
+<div class="metric"><span class="value">10.3</span><span class="unit">touches / episode</span></div>
+:::
+:::
+
+::: {.quote-panel style="margin-top:0.85em;"}
+**Interpretation:** centralized critics help predators learn coordinated chasing behavior, while independent learners struggle with the moving-target problem in multi-agent training.
+:::
+
+# 5. Our GitHub Project &<br>Practical Showcase {.section-slide}
+
+## Our Implementation
+
+::: {.stack-grid}
+::: {.tight}
+- **Framework:** PyTorch + `mpe2`, the modern PettingZoo MPE fork.
+- **Baseline:** Independent DDPG with local critics.
+- **Method:** MADDPG with centralized critics.
+- **Pipeline:** train $\rightarrow$ log rewards as CSV $\rightarrow$ plot curves $\rightarrow$ record GIFs.
+:::
+
+::: {.panel style="padding:0.85em;"}
+<div class="panel-title">Source Code</div>
+
+[github.com/f-matanza/maddpg-predator-prey](https://github.com/f-matanza/maddpg-predator-prey)
+
+::: {.small .muted}
+Custom implementation from scratch for the course project.
+:::
+:::
+:::
+
+## Evaluation Setup
+
+::: {.two-col-grid}
+::: {.tight}
+- **Environment:** `simple_tag_v3`
+- **Discount:** $\gamma = 0.95$
+- **Soft update:** $\tau = 0.01$
+- **Batch size:** 1024
+- **Metric:** `adversary_reward_mean` per episode
+:::
+
+<div class="chart-frame asset-chart" aria-label="Reward comparison">
+<img class="plot-media" src="assets/reward_comparison.png" alt="Reward comparison between MADDPG and independent DDPG" onload="this.parentElement.classList.add('has-loaded')" onerror="this.remove()">
+<div class="chart-placeholder-content">
+<div class="chart-line line-maddpg-a"></div>
+<div class="chart-line line-maddpg-b"></div>
+<div class="chart-line line-iddpg-a"></div>
+<div class="chart-line line-iddpg-b"></div>
+<div class="legend"><span><i class="maddpg"></i> MADDPG</span><span><i class="iddpg"></i> Independent DDPG</span></div>
+</div>
+</div>
+:::
+
+## Showcase: Independent DDPG Baseline
+
+::: {.two-col-grid}
+::: {.panel style="padding:0.8em;"}
+<div class="panel-title">Observed Behavior</div>
+
+Predators fail to coordinate reliably. They often chase the prey individually and get outmaneuvered.
+:::
+
+<div class="media-slot has-asset">
+<img class="gif-media" src="assets/iddpg_trained.gif" alt="Independent DDPG trained rollout" onload="this.parentElement.classList.add('has-loaded')" onerror="this.remove()">
+<div class="media-fallback">
+<strong>GIF slot</strong>
+<span>assets/iddpg_trained.gif</span>
+</div>
+</div>
+:::
+
+## Showcase: MADDPG
+
+::: {.two-col-grid}
+::: {.panel style="padding:0.8em;"}
+<div class="panel-title">Observed Behavior</div>
+
+Predators exhibit clearer coordination. They split up and corner the faster prey near boundaries or obstacles.
+:::
+
+<div class="media-slot has-asset">
+<img class="gif-media" src="assets/maddpg_trained.gif" alt="MADDPG trained rollout" onload="this.parentElement.classList.add('has-loaded')" onerror="this.remove()">
+<div class="media-fallback">
+<strong>GIF slot</strong>
+<span>assets/maddpg_trained.gif</span>
+</div>
+</div>
+:::
+
+# 6. Strengths & Limitations {.section-slide}
+
+## Strengths & Limitations
+
+::: {.stack-grid}
+::: {.panel style="padding:0.8em;"}
+<div class="panel-title">Strengths</div>
+
+- Addresses multi-agent non-stationarity directly.
+- Centralized critics stabilize training compared with independent learners.
+- Execution remains decentralized; no communication channel is required.
+:::
+
+::: {.panel style="padding:0.8em;"}
+<div class="panel-title">Limitations</div>
+
+- Critic input grows with the number of agents.
+- Very large swarms need stronger structure, such as attention, factorization, or mean-field approximations.
+- Requires access to joint observations and actions during training.
+:::
+:::
+
+# 7. Connection to Course Topics {.section-slide}
+
+## Connection to Course Topics
+
+::: {.focus-grid}
+::: {.focus-card .accent-teal}
+<span class="label">Lectures 2 & 3</span>
+MADDPG extends model-free actor-critic ideas from single-agent RL to multi-agent RL.
+:::
+
+::: {.focus-card .accent-red}
+<span class="label">Non-stationarity</span>
+Vanilla Q-learning and policy gradients fail when the environment changes as other agents learn.
+:::
+
+::: {.focus-card .accent-green}
+<span class="label">Swarms</span>
+CTDE provides a control-level foundation for reliable agent groups and swarm-like coordination.
+:::
+
+::: {.focus-card .accent-orange}
+<span class="label">Agentic systems</span>
+Learned decentralized controllers can become lower-level skills used by higher-level orchestration systems.
+:::
+:::
+
+# 8. Open Questions & Discussion {.section-slide}
+
+## Open Questions & Discussion
+
+::: {.discussion-list}
+1. **Scalability:** How can centralized critics scale to thousands of agents without exploding input size?
+2. **Communication:** What changes if agents can explicitly communicate during execution?
+3. **Real-world transfer:** Where would MADDPG be useful outside games?
+4. **Credit assignment:** How can we separate individual contribution from team-level reward?
+:::
+
+# Acknowledgements {.section-slide}
+
+## Acknowledgements & References
+
+::: {.reference-list}
+- Lowe, R., Wu, Y., Tamar, A., Harb, J., Abbeel, O. P., & Mordatch, I. (2020). *Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments*.
+- Official repository: [github.com/openai/maddpg](https://github.com/openai/maddpg)
+- Project repository: [github.com/f-matanza/maddpg-predator-prey](https://github.com/f-matanza/maddpg-predator-prey)
+- The authors acknowledge the computational resources and services provided by Salzburg Collaborative Computing (SCC), funded by the Federal Ministry of Education, Science and Research (BMBWF) and the State of Salzburg.
+:::
