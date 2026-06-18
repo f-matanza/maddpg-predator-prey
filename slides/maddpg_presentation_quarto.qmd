@@ -1,4 +1,6 @@
 ---
+# Author: f-matanza (https://github.com/f-matanza) 
+# Co-Author: danneba (https://github.com/danneba) 
 title: "Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments"
 subtitle: "MADDPG vs. Independent DDPG on Predator-Prey"
 author: "Fabio Matanza & Daniel Wassie"
@@ -24,10 +26,7 @@ execute:
   echo: false
 ---
 
-<!-- 
-Author: f-matanza (https://github.com/f-matanza) 
-Co-Author: danneba (https://github.com/danneba) 
--->
+
 
 # 1. Motivation {.section-slide}
 
