@@ -1,0 +1,93 @@
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+Job started: Sat Jun 20 07:58:51 PM UTC 2026
+Host: gpunode01.dyn.scc.plus.ac.at
+Run name: src_v2_iddpg_fast_619333
+Eval tag: 619333
+Python Version:
+Python 3.12.13
+===============================
+Training started: Sat Jun 20 07:58:51 PM UTC 2026
+Using device: cuda
+Run name: src_v2_iddpg_fast_619333
+error: XDG_RUNTIME_DIR is invalid or not set in the environment.
+Starting Training (Independent DDPG) - FAST MODE...
+Ep 00500/35000 | Noise: 0.29 | Avg Rewards: [adversary_0: 5.86, adversary_1: 5.86, adversary_2: 5.86, agent_0: -18.95]
+Ep 01000/35000 | Noise: 0.29 | Avg Rewards: [adversary_0: 8.56, adversary_1: 8.56, adversary_2: 8.56, agent_0: -9.87]
+Ep 01500/35000 | Noise: 0.28 | Avg Rewards: [adversary_0: 11.20, adversary_1: 11.20, adversary_2: 11.20, agent_0: -12.12]
+Ep 02000/35000 | Noise: 0.28 | Avg Rewards: [adversary_0: 9.56, adversary_1: 9.56, adversary_2: 9.56, agent_0: -12.06]
+Ep 02500/35000 | Noise: 0.27 | Avg Rewards: [adversary_0: 13.64, adversary_1: 13.64, adversary_2: 13.64, agent_0: -14.87]
+Ep 03000/35000 | Noise: 0.27 | Avg Rewards: [adversary_0: 16.88, adversary_1: 16.88, adversary_2: 16.88, agent_0: -17.67]
+Ep 03500/35000 | Noise: 0.27 | Avg Rewards: [adversary_0: 19.62, adversary_1: 19.62, adversary_2: 19.62, agent_0: -21.62]
+Ep 04000/35000 | Noise: 0.26 | Avg Rewards: [adversary_0: 18.28, adversary_1: 18.28, adversary_2: 18.28, agent_0: -20.89]
+Ep 04500/35000 | Noise: 0.26 | Avg Rewards: [adversary_0: 27.02, adversary_1: 27.02, adversary_2: 27.02, agent_0: -30.27]
+Ep 05000/35000 | Noise: 0.25 | Avg Rewards: [adversary_0: 28.30, adversary_1: 28.30, adversary_2: 28.30, agent_0: -30.65]
+Ep 05500/35000 | Noise: 0.24 | Avg Rewards: [adversary_0: 25.64, adversary_1: 25.64, adversary_2: 25.64, agent_0: -27.58]
+Ep 06000/35000 | Noise: 0.24 | Avg Rewards: [adversary_0: 25.62, adversary_1: 25.62, adversary_2: 25.62, agent_0: -28.16]
+Ep 06500/35000 | Noise: 0.23 | Avg Rewards: [adversary_0: 21.54, adversary_1: 21.54, adversary_2: 21.54, agent_0: -25.53]
+Ep 07000/35000 | Noise: 0.23 | Avg Rewards: [adversary_0: 20.40, adversary_1: 20.40, adversary_2: 20.40, agent_0: -23.73]
+Ep 07500/35000 | Noise: 0.22 | Avg Rewards: [adversary_0: 16.30, adversary_1: 16.30, adversary_2: 16.30, agent_0: -20.95]
+Ep 08000/35000 | Noise: 0.22 | Avg Rewards: [adversary_0: 15.80, adversary_1: 15.80, adversary_2: 15.80, agent_0: -19.88]
+Ep 08500/35000 | Noise: 0.21 | Avg Rewards: [adversary_0: 17.82, adversary_1: 17.82, adversary_2: 17.82, agent_0: -20.55]
+Ep 09000/35000 | Noise: 0.21 | Avg Rewards: [adversary_0: 16.78, adversary_1: 16.78, adversary_2: 16.78, agent_0: -20.92]
+Ep 09500/35000 | Noise: 0.20 | Avg Rewards: [adversary_0: 15.44, adversary_1: 15.44, adversary_2: 15.44, agent_0: -19.79]
+Ep 10000/35000 | Noise: 0.20 | Avg Rewards: [adversary_0: 15.64, adversary_1: 15.64, adversary_2: 15.64, agent_0: -19.45]
+Ep 10500/35000 | Noise: 0.20 | Avg Rewards: [adversary_0: 15.30, adversary_1: 15.30, adversary_2: 15.30, agent_0: -19.37]
+Ep 11000/35000 | Noise: 0.19 | Avg Rewards: [adversary_0: 13.88, adversary_1: 13.88, adversary_2: 13.88, agent_0: -18.62]
+Ep 11500/35000 | Noise: 0.18 | Avg Rewards: [adversary_0: 14.78, adversary_1: 14.78, adversary_2: 14.78, agent_0: -19.97]
+Ep 12000/35000 | Noise: 0.18 | Avg Rewards: [adversary_0: 18.02, adversary_1: 18.02, adversary_2: 18.02, agent_0: -22.62]
+Ep 12500/35000 | Noise: 0.17 | Avg Rewards: [adversary_0: 16.24, adversary_1: 16.24, adversary_2: 16.24, agent_0: -20.72]
+Ep 13000/35000 | Noise: 0.17 | Avg Rewards: [adversary_0: 14.38, adversary_1: 14.38, adversary_2: 14.38, agent_0: -19.24]
+Ep 13500/35000 | Noise: 0.16 | Avg Rewards: [adversary_0: 16.54, adversary_1: 16.54, adversary_2: 16.54, agent_0: -21.84]
+Ep 14000/35000 | Noise: 0.16 | Avg Rewards: [adversary_0: 15.04, adversary_1: 15.04, adversary_2: 15.04, agent_0: -21.14]
+Ep 14500/35000 | Noise: 0.15 | Avg Rewards: [adversary_0: 14.70, adversary_1: 14.70, adversary_2: 14.70, agent_0: -20.02]
+Ep 15000/35000 | Noise: 0.15 | Avg Rewards: [adversary_0: 15.30, adversary_1: 15.30, adversary_2: 15.30, agent_0: -20.75]
+Ep 15500/35000 | Noise: 0.14 | Avg Rewards: [adversary_0: 12.96, adversary_1: 12.96, adversary_2: 12.96, agent_0: -17.97]
+Ep 16000/35000 | Noise: 0.14 | Avg Rewards: [adversary_0: 13.50, adversary_1: 13.50, adversary_2: 13.50, agent_0: -18.58]
+Ep 16500/35000 | Noise: 0.13 | Avg Rewards: [adversary_0: 12.34, adversary_1: 12.34, adversary_2: 12.34, agent_0: -16.31]
+Ep 17000/35000 | Noise: 0.13 | Avg Rewards: [adversary_0: 13.24, adversary_1: 13.24, adversary_2: 13.24, agent_0: -18.34]
+Ep 17500/35000 | Noise: 0.12 | Avg Rewards: [adversary_0: 12.02, adversary_1: 12.02, adversary_2: 12.02, agent_0: -16.67]
+Ep 18000/35000 | Noise: 0.12 | Avg Rewards: [adversary_0: 13.24, adversary_1: 13.24, adversary_2: 13.24, agent_0: -17.77]
+Ep 18500/35000 | Noise: 0.11 | Avg Rewards: [adversary_0: 14.14, adversary_1: 14.14, adversary_2: 14.14, agent_0: -19.02]
+Ep 19000/35000 | Noise: 0.11 | Avg Rewards: [adversary_0: 13.32, adversary_1: 13.32, adversary_2: 13.32, agent_0: -17.98]
+Ep 19500/35000 | Noise: 0.10 | Avg Rewards: [adversary_0: 16.52, adversary_1: 16.52, adversary_2: 16.52, agent_0: -21.54]
+Ep 20000/35000 | Noise: 0.10 | Avg Rewards: [adversary_0: 16.28, adversary_1: 16.28, adversary_2: 16.28, agent_0: -20.72]
+Ep 20500/35000 | Noise: 0.10 | Avg Rewards: [adversary_0: 17.60, adversary_1: 17.60, adversary_2: 17.60, agent_0: -22.70]
+Ep 21000/35000 | Noise: 0.09 | Avg Rewards: [adversary_0: 19.88, adversary_1: 19.88, adversary_2: 19.88, agent_0: -24.33]
+Ep 21500/35000 | Noise: 0.08 | Avg Rewards: [adversary_0: 21.84, adversary_1: 21.84, adversary_2: 21.84, agent_0: -26.02]
+Ep 22000/35000 | Noise: 0.08 | Avg Rewards: [adversary_0: 22.38, adversary_1: 22.38, adversary_2: 22.38, agent_0: -26.51]
+Ep 22500/35000 | Noise: 0.07 | Avg Rewards: [adversary_0: 23.54, adversary_1: 23.54, adversary_2: 23.54, agent_0: -27.35]
+Ep 23000/35000 | Noise: 0.07 | Avg Rewards: [adversary_0: 25.00, adversary_1: 25.00, adversary_2: 25.00, agent_0: -29.01]
+Ep 23500/35000 | Noise: 0.07 | Avg Rewards: [adversary_0: 25.58, adversary_1: 25.58, adversary_2: 25.58, agent_0: -29.24]
+Ep 24000/35000 | Noise: 0.06 | Avg Rewards: [adversary_0: 24.48, adversary_1: 24.48, adversary_2: 24.48, agent_0: -28.87]
+Ep 24500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 27.50, adversary_1: 27.50, adversary_2: 27.50, agent_0: -31.47]
+Ep 25000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 25.18, adversary_1: 25.18, adversary_2: 25.18, agent_0: -29.62]
+Ep 25500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 22.86, adversary_1: 22.86, adversary_2: 22.86, agent_0: -27.74]
+Ep 26000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 23.60, adversary_1: 23.60, adversary_2: 23.60, agent_0: -29.07]
+Ep 26500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 22.36, adversary_1: 22.36, adversary_2: 22.36, agent_0: -26.67]
+Ep 27000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 23.62, adversary_1: 23.62, adversary_2: 23.62, agent_0: -27.93]
+Ep 27500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 22.58, adversary_1: 22.58, adversary_2: 22.58, agent_0: -27.17]
+Ep 28000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 24.22, adversary_1: 24.22, adversary_2: 24.22, agent_0: -27.31]
+Ep 28500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 22.74, adversary_1: 22.74, adversary_2: 22.74, agent_0: -26.28]
+Ep 29000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 21.52, adversary_1: 21.52, adversary_2: 21.52, agent_0: -25.26]
+Ep 29500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 23.16, adversary_1: 23.16, adversary_2: 23.16, agent_0: -27.22]
+Ep 30000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 20.56, adversary_1: 20.56, adversary_2: 20.56, agent_0: -24.50]
+Ep 30500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 21.12, adversary_1: 21.12, adversary_2: 21.12, agent_0: -25.69]
+Ep 31000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 18.86, adversary_1: 18.86, adversary_2: 18.86, agent_0: -23.82]
+Ep 31500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 18.22, adversary_1: 18.22, adversary_2: 18.22, agent_0: -22.50]
+Ep 32000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 18.86, adversary_1: 18.86, adversary_2: 18.86, agent_0: -23.83]
+Ep 32500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 16.80, adversary_1: 16.80, adversary_2: 16.80, agent_0: -21.55]
+Ep 33000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 18.56, adversary_1: 18.56, adversary_2: 18.56, agent_0: -23.57]
+Ep 33500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 18.26, adversary_1: 18.26, adversary_2: 18.26, agent_0: -22.81]
+Ep 34000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 15.90, adversary_1: 15.90, adversary_2: 15.90, agent_0: -21.06]
+Ep 34500/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 16.54, adversary_1: 16.54, adversary_2: 16.54, agent_0: -21.84]
+Ep 35000/35000 | Noise: 0.05 | Avg Rewards: [adversary_0: 15.70, adversary_1: 15.70, adversary_2: 15.70, agent_0: -20.30]
+Training complete! Logs saved to results/src_v2/iddpg_src_v2_iddpg_fast_619333_src_v2_rewards.csv
+Training finished: Sat Jun 20 09:48:05 PM UTC 2026
+===============================
+Evaluation started: Sat Jun 20 09:48:05 PM UTC 2026
+Loaded episode 35000 from checkpoints/src_v2/iddpg/src_v2_iddpg_fast_619333
+Saved GIF to gifs/src_v2/iddpg_src_v2_iddpg_fast_619333_src_v2_trained_619333.gif
+Evaluation finished: Sat Jun 20 09:48:08 PM UTC 2026
+
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––

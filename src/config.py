@@ -1,12 +1,12 @@
 # –– environment –––––––––––––
-NUM_ADVERSARIES    =  3
-NUM_GOOD_AGENTS    =  1
-NUM_OBSTACLES      =  2
-MAX_CYCLES         = 25    # steps per episode (MPE default)
-CONTINUOUS_ACTIONS = True 
+NUM_ADVERSARIES    = 3
+NUM_GOOD_AGENTS    = 1
+NUM_OBSTACLES      = 2
+MAX_CYCLES         = 25   # steps per episode (MPE default)
+CONTINUOUS_ACTIONS = True   
 
 # –– training ––––––––––––––––
-NUM_EPS     = 60_000       # total training episodes
+NUM_EPS     = 35_000       # total training episodes
 BATCH_SIZE  = 1024
 BUFFER_SIZE = 1_000_000  
 GAMMA       = 0.95         # discount factor
@@ -17,9 +17,9 @@ LR_CRITIC   = 1e-3
 # –– exploration ––––––––––––––
 NOISE_STD_START = 0.3      # initial exploration noise
 NOISE_STD_END   = 0.05     # final exploration noise
-NOISE_DECAY_EPS = 40_000
+NOISE_DECAY_EPS = 25_000
 
 # –– logging ––––––––––––––––––
 LOG_FREQ  = 500            # print/save every N episodes
 EVAL_FREQ = 5_000          # record a GIF every N episodes
-CKPT_FREQ = 10_000
+CKPT_FREQ = 1_000
