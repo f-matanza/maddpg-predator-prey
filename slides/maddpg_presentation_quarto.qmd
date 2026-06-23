@@ -389,7 +389,6 @@ Learned decentralized controllers can become lower-level skills used by higher-l
 1. **Scalability:** How can centralized critics scale to thousands of agents without exploding input size?
 2. **Communication:** What changes if agents can explicitly communicate during execution?
 3. **Real-world transfer:** Where would MADDPG be useful outside games?
-4. **Credit assignment:** How can we separate individual contribution from team-level reward?
 :::
 
 # Acknowledgements {.section-slide}
