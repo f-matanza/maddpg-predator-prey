@@ -18,7 +18,7 @@ def train():
         num_adversaries    = config.NUM_ADVERSARIES,
         num_good           = config.NUM_GOOD_AGENTS,
         num_obstacles      = config.NUM_OBSTACLES,
-        max_cycles         = config.MAX_CYCLES,
+        max_cycles         = config.MAX_CYCLES_TRAIN,
         continuous_actions = config.CONTINUOUS_ACTIONS,
     )
 

@@ -2,7 +2,8 @@
 NUM_ADVERSARIES    = 3
 NUM_GOOD_AGENTS    = 1
 NUM_OBSTACLES      = 2
-MAX_CYCLES         = 25   # steps per episode (MPE default)
+MAX_CYCLES_TRAIN   = 25   # steps per episode (MPE default)
+MAX_CYCLES_EVAL    = 150  # longer episodes for GIFs
 CONTINUOUS_ACTIONS = True   
 
 # –– training ––––––––––––––––

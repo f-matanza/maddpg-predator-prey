@@ -4,7 +4,7 @@ Generated plots, videos, and GIFs for the Quarto deck will be placed in this fol
 
 Recommended filenames used by `maddpg_presentation_quarto.qmd`:
 
-- `reward_comparison.png`
+- `reward_comparison.png` --> use this plot to choose the right episode for evaluation of maddpg & iddpg
 - `iddpg_trained.gif`
 - `maddpg_trained.gif`
 

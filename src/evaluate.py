@@ -19,7 +19,7 @@ def make_env(render_mode="rgb_array"):
         num_adversaries    = config.NUM_ADVERSARIES,
         num_good           = config.NUM_GOOD_AGENTS,
         num_obstacles      = config.NUM_OBSTACLES,
-        max_cycles         = config.MAX_CYCLES,
+        max_cycles         = config.MAX_CYCLES_EVAL,
         continuous_actions = config.CONTINUOUS_ACTIONS,
         render_mode        = render_mode,
     )
@@ -141,7 +141,6 @@ def main():
 
     algorithm  = args.algorithm
     ckpt_dir   = args.checkpoint_dir or Path(f"checkpoints/{algorithm}/{args.run_name}")
-    output     = args.output or Path(f"gifs/{algorithm}_{args.run_name}_trained.gif")
     device     = resolve_device()
 
     env        = make_env(render_mode=None)
@@ -150,6 +149,7 @@ def main():
     env.close()
 
     episode = load_checkpoints(controller, ckpt_dir, episode=args.episode)
+    output  = args.output or Path(f"gifs/{algorithm}_{args.run_name}_trained_at{episode}eps.gif")
     saved   = record_gif(controller, output, num_episodes=args.num_episodes, fps=args.fps)
     print(f"Loaded episode {episode} from {ckpt_dir}")
     print(f"Saved GIF to {saved}")

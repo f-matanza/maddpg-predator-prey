@@ -21,9 +21,10 @@ Thumbs.db
 *.err
 
 # project specific
-# checkpoints/
-# results/
-# gifs/
+checkpoints/
+results/
+gifs/
+logs/
 
 # Quarto
 .quarto/
