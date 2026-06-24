@@ -36,7 +36,11 @@ echo -e "\nTraining finished: $(date)"
 echo "==============================="
 echo -e "Evaluation started: $(date)\n"
 
+# verifies working code
 srun --cpu-bind=cores "$PYTHON" -u -B -m src.evaluate --algorithm maddpg --run-name run_0 --num-episodes 1 --fps 10
+# look into the comparison plot after running the scripts and choose best fitting weight for --episode
+# re-run in terminal:
+## srun --cpu-bind=cores "$PYTHON" -u -B -m src.evaluate --algorithm maddpg --run-name run_0 --episode XXXXXX --num-episodes 1 --fps 10
 
 echo -e "\nEvaluation finished: $(date)"
 echo "==============================="
