@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.9.38">
 
   <meta name="author" content="Fabio Matanza &amp; Daniel Wassie">
-  <meta name="dcterms.date" content="2026-06-23">
+  <meta name="dcterms.date" content="2026-06-25">
   <title>Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -145,7 +145,7 @@ Fabio Matanza &amp; Daniel Wassie
     </div>
 </div>
 
-  <p class="date">2026-06-23</p>
+  <p class="date">2026-06-25</p>
 </section>
 <section>
 <section id="motivation" class="title-slide slide level1 section-slide center">
@@ -199,9 +199,9 @@ Fabio Matanza &amp; Daniel Wassie
 Reinforcement Learning Loop
 </div>
 <ul>
-<li><strong>MDP:</strong> state <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>, action <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>, reward <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>, transition dynamics.</li>
-<li><strong>Policy:</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo>∣</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\pi(a \mid s)</annotation></semantics></math> or deterministic actor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mu(s)</annotation></semantics></math>.</li>
-<li><strong>Objective:</strong> maximize expected discounted return.</li>
+<li><strong>MDP:</strong> state <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>, action <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math>, reward <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>, transition dynamics</li>
+<li><strong>Policy:</strong> <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo stretchy="false" form="prefix">(</mo><mi>a</mi><mo>∣</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\pi(a \mid s)</annotation></semantics></math> or deterministic actor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo stretchy="false" form="prefix">(</mo><mi>s</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\mu(s)</annotation></semantics></math></li>
+<li><strong>Objective:</strong> maximize expected discounted return</li>
 </ul>
 </div>
 <div class="panel" style="padding:0.72em 0.82em;">
@@ -209,9 +209,9 @@ Reinforcement Learning Loop
 Actor-Critic and DDPG
 </div>
 <ul>
-<li><strong>Actor:</strong> selects continuous actions.</li>
-<li><strong>Critic:</strong> estimates expected return.</li>
-<li><strong>DDPG:</strong> off-policy learning with replay buffer, target networks, and soft updates <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>.</li>
+<li><strong>Actor:</strong> selects continuous actions</li>
+<li><strong>Critic:</strong> estimates expected return</li>
+<li><strong>DDPG:</strong> off-policy learning with replay buffer, target networks, and soft updates <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math></li>
 </ul>
 </div>
 </div>
@@ -224,14 +224,14 @@ Actor-Critic and DDPG
 <div class="arena-stack">
 <div class="tight">
 <ul>
-<li><strong>Formalism:</strong> partially observable Markov game with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> agents.</li>
-<li>Each agent <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> receives observation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>o</mi><mi>i</mi></msub><annotation encoding="application/x-tex">o_i</annotation></semantics></math>, chooses action <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>i</mi></msub><annotation encoding="application/x-tex">a_i</annotation></semantics></math>, and receives reward <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>i</mi></msub><annotation encoding="application/x-tex">r_i</annotation></semantics></math>.</li>
-<li><strong>Environment:</strong> PettingZoo MPE <code>simple_tag_v3</code> / <code>mpe2</code> predator-prey.</li>
-<li><strong>Scenario:</strong> 3 slower predators vs.&nbsp;1 faster prey with 2 obstacles.</li>
-<li>Coordination matters because a single predator is easy to evade.</li>
+<li><strong>Formalism:</strong> partially observable Markov game with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> agents</li>
+<li>Each agent <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> receives observation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>o</mi><mi>i</mi></msub><annotation encoding="application/x-tex">o_i</annotation></semantics></math>, chooses action <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>i</mi></msub><annotation encoding="application/x-tex">a_i</annotation></semantics></math>, and receives reward <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>i</mi></msub><annotation encoding="application/x-tex">r_i</annotation></semantics></math></li>
+<li><strong>Environment:</strong> PettingZoo MPE <code>simple_tag_v3</code> / <code>mpe2</code> predator-prey</li>
+<li><strong>Scenario:</strong> 3 slower predators vs.&nbsp;1 faster prey with 2 obstacles</li>
+<li>Coordination matters because a single predator is easy to evade</li>
 </ul>
 </div>
-<div class="arena" aria-label="Predator-prey schematic">
+<div class="arena" aria-label="Predator-prey schematic" style="box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 5px;">
 <div class="obstacle obstacle-a">
 
 </div>
@@ -251,6 +251,9 @@ P
 E
 </div>
 </div>
+<p style="text-align: center; font-size: 0.85em; color: #666; margin-top: 10px;">
+<strong>P</strong> = Pursuer (Predator) &nbsp;&nbsp;&nbsp;&nbsp; <strong>E</strong> = Evader (Prey)
+</p>
 </div>
 </section>
 <section id="the-problem-with-independent-learners" class="slide level2">
@@ -286,9 +289,9 @@ E
 Centralized Training
 </div>
 <ul>
-<li>The critic observes all agents’ observations and actions.</li>
-<li>It can assign credit using global context.</li>
-<li>This stabilizes gradients in cooperative, competitive, and mixed games.</li>
+<li>The critic observes all agents’ observations and actions</li>
+<li>It can assign credit using global context</li>
+<li>This stabilizes gradients in cooperative, competitive, and mixed games</li>
 </ul>
 </div>
 <div class="panel" style="padding:0.75em 0.85em;">
@@ -296,9 +299,9 @@ Centralized Training
 Decentralized Execution
 </div>
 <ul>
-<li>Each actor uses only its own local observation.</li>
-<li>No global state or explicit communication channel is required at deployment.</li>
-<li>The learned policy can be run independently per agent.</li>
+<li>Each actor uses only its own local observation</li>
+<li>No global state or explicit communication channel is required at deployment</li>
+<li>The learned policy can be run independently per agent</li>
 </ul>
 </div>
 </div>
@@ -355,6 +358,12 @@ Only the critic input changes, keeping the comparison focused.
 </p>
 </div>
 </div>
+<div style="text-align: center; margin-top: 15px;">
+<img src="assets/paper_figure_1.png" alt="Architecture Comparison" style="max-height: 420px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;">
+<p style="font-size: 0.8em; color: #666; margin-top: 10px;">
+Figure 1: CTDE Architecture w.r.t. MADDPG
+</p>
+</div>
 </section>
 <section id="maddpg-learning-flow" class="slide level2">
 <h2>MADDPG Learning Flow</h2>
@@ -363,25 +372,25 @@ Only the critic input changes, keeping the comparison focused.
 <div class="flow-heading">
 <span class="num">1</span><strong>Joint replay</strong>
 </div>
-<p><span>Store <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>o</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow></msub><mo>,</mo><msub><mi>a</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow></msub><mo>,</mo><msub><mi>r</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow></msub><mo>,</mo><msubsup><mi>o</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow><mo>′</mo></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(o_{all}, a_{all}, r_{all}, o'_{all})</annotation></semantics></math> for all agents.</span></p>
+<p><span>Store <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>o</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow></msub><mo>,</mo><msub><mi>a</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow></msub><mo>,</mo><msub><mi>r</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow></msub><mo>,</mo><msubsup><mi>o</mi><mrow><mi>a</mi><mi>l</mi><mi>l</mi></mrow><mo>′</mo></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(o_{all}, a_{all}, r_{all}, o'_{all})</annotation></semantics></math> for all agents</span></p>
 </div>
 <div class="flow-step">
 <div class="flow-heading">
 <span class="num">2</span><strong>Critic update</strong>
 </div>
-<p><span>Fit centralized targets with all next observations and target actors.</span></p>
+<p><span>Fit centralized targets with all next observations and target actors</span></p>
 </div>
 <div class="flow-step">
 <div class="flow-heading">
 <span class="num">3</span><strong>Actor update</strong>
 </div>
-<p><span>Improve <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>μ</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\mu_i</annotation></semantics></math> using the gradient of centralized <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Q</mi><mi>i</mi></msub><annotation encoding="application/x-tex">Q_i</annotation></semantics></math> with respect to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>i</mi></msub><annotation encoding="application/x-tex">a_i</annotation></semantics></math>.</span></p>
+<p><span>Improve <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>μ</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\mu_i</annotation></semantics></math> using the gradient of centralized <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Q</mi><mi>i</mi></msub><annotation encoding="application/x-tex">Q_i</annotation></semantics></math> with respect to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>i</mi></msub><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span></p>
 </div>
 <div class="flow-step">
 <div class="flow-heading">
 <span class="num">4</span><strong>Soft targets</strong>
 </div>
-<p><span>Update target networks with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>θ</mi><mo>′</mo></msup><mo>←</mo><mi>τ</mi><mi>θ</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>τ</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>θ</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">\theta' \leftarrow \tau\theta + (1-\tau)\theta'</annotation></semantics></math>.</span></p>
+<p><span>Update target networks with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>θ</mi><mo>′</mo></msup><mo>←</mo><mi>τ</mi><mi>θ</mi><mo>+</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>τ</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>θ</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">\theta' \leftarrow \tau\theta + (1-\tau)\theta'</annotation></semantics></math></span></p>
 </div>
 </div>
 <div class="equation-band">
@@ -423,10 +432,10 @@ Only the critic input changes, keeping the comparison focused.
 <div class="stack-grid">
 <div class="tight">
 <ul>
-<li><strong>Framework:</strong> PyTorch + <code>mpe2</code>, the modern PettingZoo MPE fork.</li>
-<li><strong>Baseline:</strong> Independent DDPG with local critics.</li>
-<li><strong>Method:</strong> MADDPG with centralized critics.</li>
-<li><strong>Pipeline:</strong> train <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math> log rewards as CSV <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math> plot curves <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math> record GIFs.</li>
+<li><strong>Framework:</strong> PyTorch + <code>mpe2</code>, the modern PettingZoo MPE fork</li>
+<li><strong>Baseline:</strong> Independent DDPG with local critics</li>
+<li><strong>Method:</strong> MADDPG with centralized critics</li>
+<li><strong>Pipeline:</strong> train <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math> log rewards as CSV <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math> plot curves <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>→</mo><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math> record GIFs</li>
 </ul>
 </div>
 <div class="panel" style="padding:0.85em;">
@@ -435,7 +444,7 @@ Source Code
 </div>
 <p><a href="https://github.com/f-matanza/maddpg-predator-prey">github.com/f-matanza/maddpg-predator-prey</a></p>
 <div class="small muted">
-<p>Custom implementation from scratch for the course project.</p>
+<p>custom implementation from scratch for the course project</p>
 </div>
 </div>
 </div>
@@ -452,25 +461,8 @@ Source Code
 <li><strong>Metric:</strong> <code>adversary_reward_mean</code> per episode</li>
 </ul>
 </div>
-<div class="chart-frame asset-chart" aria-label="Reward comparison">
-<img class="plot-media" src="assets/reward_comparison.png" alt="Reward comparison between MADDPG and independent DDPG" onload="this.parentElement.classList.add('has-loaded')" onerror="this.remove()">
-<div class="chart-placeholder-content">
-<div class="chart-line line-maddpg-a">
-
-</div>
-<div class="chart-line line-maddpg-b">
-
-</div>
-<div class="chart-line line-iddpg-a">
-
-</div>
-<div class="chart-line line-iddpg-b">
-
-</div>
-<div class="legend">
-<span><i class="maddpg"></i> MADDPG</span><span><i class="iddpg"></i> Independent DDPG</span>
-</div>
-</div>
+<div style="text-align: center; height: 100%; display: flex; align-items: center; justify-content: center;">
+<p><img src="assets/reward_comparison.png" style="max-width: 100%; max-height: 550px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;"></p>
 </div>
 </div>
 </section>
@@ -483,11 +475,8 @@ Observed Behavior
 </div>
 <p>Predators fail to coordinate reliably. They often chase the prey individually and get outmaneuvered.</p>
 </div>
-<div class="media-slot has-asset">
-<img class="gif-media" src="assets/iddpg_trained.gif" alt="Independent DDPG trained rollout" onload="this.parentElement.classList.add('has-loaded')" onerror="this.remove()">
-<div class="media-fallback">
-<p><strong>GIF slot</strong> <span>assets/iddpg_trained.gif</span></p>
-</div>
+<div style="text-align: center; height: 100%; display: flex; align-items: center; justify-content: center;">
+<p><video src="assets/iddpg_trained.mp4" autoplay="" muted="" playsinline="" onended="setTimeout(() => this.play(), 800)" style="max-width: 100%; max-height: 550px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;"></video></p>
 </div>
 </div>
 </section>
@@ -500,11 +489,8 @@ Observed Behavior
 </div>
 <p>Predators exhibit clearer coordination. They split up and corner the faster prey near boundaries or obstacles.</p>
 </div>
-<div class="media-slot has-asset">
-<img class="gif-media" src="assets/maddpg_trained.gif" alt="MADDPG trained rollout" onload="this.parentElement.classList.add('has-loaded')" onerror="this.remove()">
-<div class="media-fallback">
-<p><strong>GIF slot</strong> <span>assets/maddpg_trained.gif</span></p>
-</div>
+<div style="text-align: center; height: 100%; display: flex; align-items: center; justify-content: center;">
+<p><video src="assets/maddpg_trained.mp4" autoplay="" muted="" playsinline="" onended="setTimeout(() => this.play(), 800)" style="max-width: 100%; max-height: 550px; object-fit: contain; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e0e0e0;"></video></p>
 </div>
 </div>
 </section></section>
@@ -521,9 +507,9 @@ Observed Behavior
 Strengths
 </div>
 <ul>
-<li>Addresses multi-agent non-stationarity directly.</li>
-<li>Centralized critics stabilize training compared with independent learners.</li>
-<li>Execution remains decentralized; no communication channel is required.</li>
+<li>Addresses multi-agent non-stationarity directly</li>
+<li>Centralized critics stabilize training compared with independent learners</li>
+<li>Execution remains decentralized; no communication channel is required</li>
 </ul>
 </div>
 <div class="panel" style="padding:0.8em;">
@@ -531,9 +517,9 @@ Strengths
 Limitations
 </div>
 <ul>
-<li>Critic input grows with the number of agents.</li>
-<li>Very large swarms need stronger structure, such as attention, factorization, or mean-field approximations.</li>
-<li>Requires access to joint observations and actions during training.</li>
+<li>Critic input grows with the number of agents</li>
+<li>Very large swarms need stronger structure, such as attention, factorization, or mean-field approximations</li>
+<li>Requires access to joint observations and actions during training</li>
 </ul>
 </div>
 </div>
@@ -584,7 +570,7 @@ Limitations
 <h2>Acknowledgements &amp; References</h2>
 <div class="reference-list">
 <ul>
-<li>Lowe, R., Wu, Y., Tamar, A., Harb, J., Abbeel, O. P., &amp; Mordatch, I. (2020). <em>Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments</em>.</li>
+<li>Lowe, R., Wu, Y., Tamar, A., Harb, J., Abbeel, O. P., &amp; Mordatch, I. (2020). <em>Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments</em>. <a href="https://arxiv.org/abs/1706.02275">arXiv:1706.02275</a></li>
 <li>Official repository: <a href="https://github.com/openai/maddpg">github.com/openai/maddpg</a></li>
 <li>Project repository: <a href="https://github.com/f-matanza/maddpg-predator-prey">github.com/f-matanza/maddpg-predator-prey</a></li>
 <li>The authors acknowledge the computational resources and services provided by Salzburg Collaborative Computing (SCC), funded by the Federal Ministry of Education, Science and Research (BMBWF) and the State of Salzburg.</li>
