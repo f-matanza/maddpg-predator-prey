@@ -8,6 +8,8 @@ institute: "Advanced Reinforcement Learning and Agentic AI Systems"
 date: "2026-06-25"
 format:
   revealjs:
+    resources:
+      - "assets/"
     theme: [default, maddpg-metropolis.scss]
     aspectratio: 169
     width: 1600
